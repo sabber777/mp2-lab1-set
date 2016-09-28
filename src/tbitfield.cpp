@@ -111,8 +111,8 @@ int TBitField::operator!=(const TBitField &bf) const // сравнение
 	bool flag = true;
 	int min = MemLen > bf.MemLen ? bf.MemLen : MemLen;
 	for (int i = 0; i < min; ++i)
-	if (pMem[i] != bf.pMem[i]){
-		flag = true;
+	if (pMem[i] == bf.pMem[i]){
+		flag = false;
 		break;
 	}
 	return flag;
@@ -159,8 +159,8 @@ istream &operator>>(istream &istr, TBitField &bf) // ввод
 {
 	int i = 0;
 	char ch;
-	do	istream >> ch;
-	while (ch == ' ');// !=
+	do	istr >> ch;
+	while (ch == ' ');
 	while (1)
 	if (ch == '0')
 		bf.ClrBit(++i);
@@ -169,7 +169,7 @@ istream &operator>>(istream &istr, TBitField &bf) // ввод
 		bf.SetBit(++i);
 	else
 		break;
-	return istream;
+	return istr;
 }
 
 ostream &operator<<(ostream &ostr, const TBitField &bf) // вывод
@@ -177,11 +177,11 @@ ostream &operator<<(ostream &ostr, const TBitField &bf) // вывод
 	int len = bf.BitLen;
 	for (int i = 0; i < len; ++i){
 		if (!(i % 8))
-			ostream << endl;
+			ostr << endl;
 		if (bf.GetBit(i))
-			ostream << '1';
+			ostr << '1';
 		else
-			ostream << '0';
+			ostr << '0';
 	}
-	return ostream;
-}
+	return ostr;
+} 
